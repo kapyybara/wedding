@@ -10,7 +10,7 @@ import ScrollReveal from './ScrollReveal.vue'
   <section class="relative overflow-hidden bg-forest-dark text-cream">
     <div class="mx-auto grid max-w-6xl sm:grid-cols-[1fr_1.3fr_1fr]">
       <img
-        :src="wedding.photos.strip[1]"
+        :src="wedding.photos.eventsLeft"
         alt=""
         class="hidden h-full min-h-[520px] w-full object-cover sm:block"
         loading="lazy"
@@ -48,7 +48,7 @@ import ScrollReveal from './ScrollReveal.vue'
       </div>
 
       <img
-        :src="wedding.photos.strip[2]"
+        :src="wedding.photos.eventsRight"
         alt=""
         class="hidden h-full min-h-[520px] w-full object-cover sm:block"
         loading="lazy"

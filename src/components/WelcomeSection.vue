@@ -23,7 +23,7 @@ const time = computed(() =>
       <ScrollReveal animation="slide-right">
         <div class="mx-auto max-w-xs sm:mx-0 sm:ml-auto">
           <img
-            :src="wedding.photos.strip[0]"
+            :src="wedding.photos.welcome"
             :alt="`${wedding.groom} và ${wedding.bride}`"
             class="aspect-[3/4] w-full object-cover"
             loading="lazy"

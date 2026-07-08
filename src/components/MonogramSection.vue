@@ -6,7 +6,7 @@ import { onImgError } from '../data/imageFallback'
 <template>
   <section class="relative flex h-[60vh] min-h-[420px] items-center justify-center overflow-hidden">
     <img
-      :src="wedding.photos.strip[1]"
+      :src="wedding.photos.monogram"
       alt="Nhật Tiến và Phương Vy trên bãi biển"
       class="absolute inset-0 h-full w-full object-cover"
       loading="lazy"

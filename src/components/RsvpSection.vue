@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { wedding, type RsvpForm } from '../data/wedding'
-import { onImgError } from '../data/imageFallback'
 import ScrollReveal from './ScrollReveal.vue'
 
 const form = reactive<RsvpForm>({
@@ -62,30 +61,18 @@ function submit() {
           <form v-else class="space-y-6 text-left" @submit.prevent="submit" novalidate>
             <div>
               <label for="rsvp-name" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Họ và tên</label>
-              <input
-                id="rsvp-name"
-                v-model="form.name"
-                type="text"
-                autocomplete="name"
-                class="rsvp-input"
-                placeholder="Nhập họ tên của bạn"
-              />
+              <input id="rsvp-name" v-model="form.name" type="text" autocomplete="name" class="rsvp-input"
+                placeholder="Nhập họ tên của bạn" />
             </div>
 
             <fieldset>
               <legend class="text-xs tracking-[0.2em] text-ink-muted uppercase">Bạn có thể tham dự chứ?</legend>
               <div class="mt-3 flex gap-3">
-                <label
-                  class="attend-chip"
-                  :class="form.attendance === 'yes' && 'attend-chip--on'"
-                >
+                <label class="attend-chip" :class="form.attendance === 'yes' && 'attend-chip--on'">
                   <input v-model="form.attendance" type="radio" value="yes" class="sr-only" />
                   Vui lòng tham dự
                 </label>
-                <label
-                  class="attend-chip"
-                  :class="form.attendance === 'no' && 'attend-chip--on'"
-                >
+                <label class="attend-chip" :class="form.attendance === 'no' && 'attend-chip--on'">
                   <input v-model="form.attendance" type="radio" value="no" class="sr-only" />
                   Rất tiếc không thể
                 </label>
@@ -93,26 +80,15 @@ function submit() {
             </fieldset>
 
             <div v-if="form.attendance === 'yes'">
-              <label for="rsvp-guests" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Số người tham dự</label>
-              <input
-                id="rsvp-guests"
-                v-model.number="form.guests"
-                type="number"
-                min="1"
-                max="10"
-                class="rsvp-input"
-              />
+              <label for="rsvp-guests" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Số người tham
+                dự</label>
+              <input id="rsvp-guests" v-model.number="form.guests" type="number" min="1" max="10" class="rsvp-input" />
             </div>
 
             <div>
               <label for="rsvp-msg" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Lời nhắn gửi</label>
-              <textarea
-                id="rsvp-msg"
-                v-model="form.message"
-                rows="3"
-                class="rsvp-input resize-none"
-                placeholder="Gửi lời chúc đến cô dâu chú rể"
-              ></textarea>
+              <textarea id="rsvp-msg" v-model="form.message" rows="3" class="rsvp-input resize-none"
+                placeholder="Gửi lời chúc đến cô dâu chú rể"></textarea>
             </div>
 
             <p v-if="error" class="text-sm text-[#A6483C]" role="alert">{{ error }}</p>
@@ -143,10 +119,12 @@ function submit() {
   outline: none;
   transition: border-color 200ms;
 }
+
 .rsvp-input::placeholder {
   color: var(--color-ink-muted);
   opacity: 0.5;
 }
+
 .rsvp-input:focus-visible {
   border-bottom-color: var(--color-gold);
   box-shadow: 0 1px 0 0 var(--color-gold);
@@ -163,17 +141,19 @@ function submit() {
   color: var(--color-ink-muted);
   transition: all 200ms;
 }
+
 .attend-chip:hover {
   border-color: var(--color-gold);
 }
+
 .attend-chip:focus-within {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
 }
+
 .attend-chip--on {
   background: var(--color-ink);
   color: var(--color-cream);
   border-color: var(--color-ink);
 }
 </style>
-
