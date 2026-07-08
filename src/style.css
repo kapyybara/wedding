@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-script: 'Beau Rivage', 'Cormorant Garamond', cursive;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Editorial botanical wedding — cream + deep forest green palette */
+  --color-cream: #F5F1E9;
+  --color-cream-dark: #ECE5D6;
+  --color-paper: #EFE9DC;
+  --color-ink: #2A2620;
+  --color-ink-muted: #6C6458;
+  --color-forest: #333B27;
+  --color-forest-dark: #23281B;
+  --color-gold: #4A5138;
+  --color-gold-light: #6B7255;
+  --color-border-subtle: #DAD2BF;
+  --color-overlay-glass: rgba(255, 255, 255, 0.12);
+  --color-overlay-dark: rgba(24, 26, 16, 0.5);
+
+  /* Typography scale */
+  --text-display-xl: 3.5rem;
+  --text-display-script: 4.5rem;
+  --text-heading-lg: 2rem;
+  --text-label-sm: 0.6875rem;
+  --text-body-md: 0.9375rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offsets each top-level section so the fixed FloatingNav doesn't cover its top
+   when navigated to via scrollIntoView. */
+.snap-anchor {
+  scroll-margin-top: 84px;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-forest);
+  color: var(--color-cream);
+}
+
+/* Scroll reveal animations */
+.scroll-reveal {
+  opacity: 0;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+.scroll-reveal.fade-in { transform: none; }
+.scroll-reveal.slide-up { transform: translateY(36px); }
+.scroll-reveal.slide-left { transform: translateX(36px); }
+.scroll-reveal.slide-right { transform: translateX(-36px); }
+.scroll-reveal.zoom-in { transform: scale(0.96); }
+
+/* Divider ornament — a single thin line, editorial minimalism (no dot/diamond) */
+.divider-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.divider-ornament::before {
+  content: '';
+  width: 100%;
+  max-width: 64px;
+  height: 1px;
+  background: var(--color-border-subtle);
+}
+
+/* Editorial corner label — small tracked caps anchored to a photo's corner */
+.corner-label {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Frosted glass utility */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* Eyebrow label */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-label-sm);
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Section padding */
+.section-padding {
+  padding: 5.5rem 1.5rem;
+}
+@media (min-width: 640px) {
+  .section-padding {
+    padding: 7rem 1.5rem;
+  }
+}
+
+/* Pill button primary — flat, rectangular, editorial (no radius, thin uppercase tracking) */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0;
+  background: transparent;
+  border: 1px solid var(--color-ink);
+  color: var(--color-ink);
+  padding: 0.75rem 2.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+.btn-primary .arrow {
+  transition: transform 0.3s ease;
+}
+.btn-primary:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Pill button outline on dark */
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0;
+  border: 1px solid var(--color-cream);
+  background: transparent;
+  color: var(--color-cream);
+  padding: 0.75rem 2.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Carousel nav arrow */
+.carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.05);
+}
+
+/* Hide scrollbar for the floating nav's horizontal scroll on small screens */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
