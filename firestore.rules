@@ -1,0 +1,18 @@
+rules_version = '2';
+
+// Dán nội dung file này vào Firebase Console > Firestore Database > Rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /rsvps/{rsvpId} {
+      // Khách chỉ được TẠO MỚI phản hồi RSVP, không được đọc/sửa/xoá của người khác.
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.name.size() < 200
+                    && request.resource.data.attendance in ['yes', 'no']
+                    && request.resource.data.guests is int
+                    && request.resource.data.guests >= 0
+                    && request.resource.data.guests <= 20;
+      allow read, update, delete: if false;
+    }
+  }
+}

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../lib/firebase'
 import { wedding, type RsvpForm } from '../data/wedding'
 import ScrollReveal from './ScrollReveal.vue'
 
@@ -11,9 +13,10 @@ const form = reactive<RsvpForm>({
 })
 
 const submitted = ref(false)
+const submitting = ref(false)
 const error = ref('')
 
-function submit() {
+async function submit() {
   error.value = ''
   if (!form.name.trim()) {
     error.value = 'Vui lòng nhập họ tên của bạn.'
@@ -23,14 +26,22 @@ function submit() {
     error.value = 'Vui lòng cho biết bạn có thể tham dự hay không.'
     return
   }
+
+  submitting.value = true
   try {
-    const replies = JSON.parse(localStorage.getItem('rsvp-replies') || '[]')
-    replies.push({ ...form, at: new Date().toISOString() })
-    localStorage.setItem('rsvp-replies', JSON.stringify(replies))
+    await addDoc(collection(db, 'rsvps'), {
+      name: form.name.trim(),
+      attendance: form.attendance,
+      guests: form.attendance === 'yes' ? form.guests : 0,
+      message: form.message.trim(),
+      createdAt: serverTimestamp(),
+    })
+    submitted.value = true
   } catch {
-    /* storage unavailable — ignore */
+    error.value = 'Không thể gửi xác nhận lúc này, bạn vui lòng thử lại nhé.'
+  } finally {
+    submitting.value = false
   }
-  submitted.value = true
 }
 </script>
 
@@ -93,7 +104,9 @@ function submit() {
 
             <p v-if="error" class="text-sm text-[#A6483C]" role="alert">{{ error }}</p>
 
-            <button type="submit" class="btn-primary w-full justify-center">Gửi xác nhận</button>
+            <button type="submit" class="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50" :disabled="submitting">
+              {{ submitting ? 'Đang gửi...' : 'Gửi xác nhận' }}
+            </button>
           </form>
 
           <p class="mt-8 border-t border-border-subtle pt-6 text-sm leading-relaxed text-ink-muted">
