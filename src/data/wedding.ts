@@ -89,7 +89,7 @@ export const wedding = {
     title: 'XÁC NHẬN THAM DỰ',
     intro: 'Hãy cho tụi mình biết bạn có thể đến chung vui nhé',
     deadlineNote:
-      'Vui lòng phản hồi trước ngày 10.07.2026 để tụi mình tiện sắp xếp. Cảm ơn bạn rất nhiều!',
+      'Vui lòng phản hồi trước ngày 18.07.2026 để tụi mình tiện sắp xếp. Cảm ơn bạn rất nhiều!',
   },
 
   // Mừng cưới — chuyển khoản.
