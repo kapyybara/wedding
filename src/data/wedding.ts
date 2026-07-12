@@ -28,9 +28,9 @@ export const wedding = {
     subtitle: 'Từ những ngày đầu đại học đến chung một mái nhà',
     milestones: [
       {
-        date: 'Mùa thu 2019',
+        date: 'Mùa thu 2020',
         heading: 'Lần đầu gặp gỡ',
-        text: 'Tụi mình tình cờ quen nhau khi cùng tham gia đoàn hội năm nhất đại học. Những ngày cùng nhau hoạt động giúp tụi mình dần gắn kết và mở đầu cho một câu chuyện thật đẹp.',
+        text: 'Tụi mình tình cờ quen nhau tại văn phòng Đoàn khi cùng tham gia hoạt động đoàn hội thời đại học. Những ngày cùng nhau hoạt động giúp tụi mình dần gắn kết và mở đầu cho một câu chuyện thật đẹp.',
         photo: '/images/story-1.jpg',
       },
       {
