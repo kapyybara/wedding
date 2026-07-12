@@ -16,6 +16,18 @@ const submitted = ref(false)
 const submitting = ref(false)
 const error = ref('')
 
+const petals = ref<{ id: number; dx: number; dy: number; rot: number; delay: number }[]>([])
+
+function burstPetals() {
+  petals.value = Array.from({ length: 10 }, (_, i) => ({
+    id: i,
+    dx: Math.round((Math.random() - 0.5) * 220),
+    dy: Math.round(-60 - Math.random() * 140),
+    rot: Math.round((Math.random() - 0.5) * 240),
+    delay: Math.round(Math.random() * 150),
+  }))
+}
+
 async function submit() {
   error.value = ''
   if (!form.name.trim()) {
@@ -37,6 +49,7 @@ async function submit() {
       createdAt: serverTimestamp(),
     })
     submitted.value = true
+    burstPetals()
   } catch {
     error.value = 'Không thể gửi xác nhận lúc này, bạn vui lòng thử lại nhé.'
   } finally {
@@ -57,7 +70,14 @@ async function submit() {
       <ScrollReveal animation="slide-up">
         <div class="mx-auto mt-12 max-w-md border-t border-border-subtle pt-10">
           <!-- success state -->
-          <div v-if="submitted">
+          <div v-if="submitted" class="relative">
+            <span
+              v-for="p in petals"
+              :key="p.id"
+              class="petal pointer-events-none absolute left-1/2 top-0"
+              :style="{ '--dx': `${p.dx}px`, '--dy': `${p.dy}px`, '--rot': `${p.rot}deg`, animationDelay: `${p.delay}ms` }"
+              aria-hidden="true"
+            ></span>
             <p class="font-display text-2xl text-ink">Cảm ơn bạn, {{ form.name }}!</p>
             <p class="mt-3 text-ink-muted">
               {{
@@ -70,10 +90,10 @@ async function submit() {
 
           <!-- form -->
           <form v-else class="space-y-6 text-left" @submit.prevent="submit" novalidate>
-            <div>
-              <label for="rsvp-name" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Họ và tên</label>
+            <div class="field-float">
               <input id="rsvp-name" v-model="form.name" type="text" autocomplete="name" class="rsvp-input"
-                placeholder="Nhập họ tên của bạn" />
+                placeholder=" " />
+              <label for="rsvp-name" class="field-label">Họ và tên</label>
             </div>
 
             <fieldset>
@@ -90,16 +110,16 @@ async function submit() {
               </div>
             </fieldset>
 
-            <div v-if="form.attendance === 'yes'">
-              <label for="rsvp-guests" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Số người tham
-                dự</label>
-              <input id="rsvp-guests" v-model.number="form.guests" type="number" min="1" max="10" class="rsvp-input" />
+            <div v-if="form.attendance === 'yes'" class="field-float">
+              <input id="rsvp-guests" v-model.number="form.guests" type="number" min="1" max="10" class="rsvp-input"
+                placeholder=" " />
+              <label for="rsvp-guests" class="field-label">Số người tham dự</label>
             </div>
 
-            <div>
-              <label for="rsvp-msg" class="block text-xs tracking-[0.2em] text-ink-muted uppercase">Lời nhắn gửi</label>
+            <div class="field-float">
               <textarea id="rsvp-msg" v-model="form.message" rows="3" class="rsvp-input resize-none"
-                placeholder="Gửi lời chúc đến cô dâu chú rể"></textarea>
+                placeholder=" "></textarea>
+              <label for="rsvp-msg" class="field-label">Lời nhắn gửi</label>
             </div>
 
             <p v-if="error" class="text-sm text-[#A6483C]" role="alert">{{ error }}</p>
@@ -119,13 +139,16 @@ async function submit() {
 </template>
 
 <style scoped>
+.field-float {
+  position: relative;
+}
+
 .rsvp-input {
-  margin-top: 0.4rem;
   width: 100%;
   border: none;
   border-bottom: 1.5px solid var(--color-border-subtle);
   background: transparent;
-  padding: 0.5rem 0.1rem;
+  padding: 1.35rem 0.1rem 0.5rem;
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   color: var(--color-ink);
@@ -134,13 +157,39 @@ async function submit() {
 }
 
 .rsvp-input::placeholder {
-  color: var(--color-ink-muted);
-  opacity: 0.5;
+  color: transparent;
 }
 
 .rsvp-input:focus-visible {
   border-bottom-color: var(--color-gold);
   box-shadow: 0 1px 0 0 var(--color-gold);
+}
+
+.field-label {
+  position: absolute;
+  left: 0.1rem;
+  top: 1.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--color-ink-muted);
+  opacity: 0.6;
+  letter-spacing: normal;
+  text-transform: none;
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 200ms ease, color 200ms ease, opacity 200ms ease;
+}
+
+.rsvp-input:focus + .field-label,
+.rsvp-input:not(:placeholder-shown) + .field-label {
+  transform: translateY(-1.15rem) scale(0.74);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+.rsvp-input:focus + .field-label {
+  color: var(--color-gold);
 }
 
 .attend-chip {
@@ -168,5 +217,27 @@ async function submit() {
   background: var(--color-ink);
   color: var(--color-cream);
   border-color: var(--color-ink);
+}
+
+.petal {
+  width: 10px;
+  height: 14px;
+  background: var(--color-gold-light);
+  border-radius: 0 100% 0 100%;
+  opacity: 0;
+  animation: petal-burst 1.1s ease-out forwards;
+}
+@keyframes petal-burst {
+  0% {
+    transform: translate(-50%, 0) rotate(0deg) scale(0.4);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), var(--dy)) rotate(var(--rot)) scale(1);
+    opacity: 0;
+  }
 }
 </style>

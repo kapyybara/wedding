@@ -3,6 +3,9 @@ export const wedding = {
   brideAndGroom: 'NHẬT TIẾN & PHƯƠNG VY',
   bride: 'Phương Vy',
   groom: 'Nhật Tiến',
+  // Tên gọi ngắn — dùng ở monogram, footer, page loader thay cho chữ viết tắt.
+  brideShort: 'Vy',
+  groomShort: 'Tiến',
   // Ngày giờ tổ chức (định dạng ISO) — dùng cho đồng hồ đếm ngược.
   weddingDate: '2026-07-24T11:00:00+07:00',
   dateLabel: '24 . 07 . 2026',

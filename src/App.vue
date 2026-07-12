@@ -12,9 +12,11 @@ import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import FloatingNav from './components/FloatingNav.vue'
 import BackToTop from './components/BackToTop.vue'
+import PageLoader from './components/PageLoader.vue'
 </script>
 
 <template>
+  <PageLoader />
   <main class="min-h-screen bg-cream">
     <ScrollProgress />
     <FloatingNav />

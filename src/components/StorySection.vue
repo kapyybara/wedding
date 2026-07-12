@@ -1,7 +1,29 @@
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 import { wedding } from '../data/wedding'
 import { onImgError } from '../data/imageFallback'
 import ScrollReveal from './ScrollReveal.vue'
+
+const timelineRef = ref<HTMLElement | null>(null)
+const vineProgress = ref(0)
+
+function onScroll() {
+  const el = timelineRef.value
+  if (!el) return
+  const rect = el.getBoundingClientRect()
+  const winH = window.innerHeight
+  // 0 when the timeline's top reaches the viewport center, 1 when its
+  // bottom passes the viewport center — grows the vine as you read through.
+  const total = rect.height + winH * 0.5
+  const covered = winH * 0.5 - rect.top
+  vineProgress.value = Math.min(Math.max(covered / total, 0), 1)
+}
+
+onMounted(() => {
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
 
 <template>
@@ -15,10 +37,16 @@ import ScrollReveal from './ScrollReveal.vue'
       </ScrollReveal>
     </div>
 
+    <div ref="timelineRef" class="relative">
+      <!-- Center vine — desktop only, grows with scroll progress through the milestones -->
+      <div class="vine-track pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-border-subtle sm:block" aria-hidden="true">
+        <div class="vine-fill w-full bg-gold transition-[height] duration-150 ease-out" :style="{ height: `${vineProgress * 100}%` }" />
+      </div>
+
     <div
       v-for="(m, i) in wedding.story.milestones"
       :key="i"
-      class="grid sm:grid-cols-2"
+      class="relative grid sm:grid-cols-2"
     >
       <ScrollReveal
         :animation="i % 2 === 0 ? 'slide-right' : 'slide-left'"
@@ -43,6 +71,7 @@ import ScrollReveal from './ScrollReveal.vue'
           <p class="mt-5 max-w-sm leading-relaxed text-ink-muted">{{ m.text }}</p>
         </div>
       </ScrollReveal>
+    </div>
     </div>
   </section>
 </template>

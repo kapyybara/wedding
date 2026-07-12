@@ -38,16 +38,17 @@ const spanClass = (i: number) => bentoSpans[i % bentoSpans.length]
         :key="i"
         animation="fade-in"
         :class="spanClass(i)"
+        :style="{ transitionDelay: `${(i % bentoSpans.length) * 80}ms` }"
       >
         <button
           type="button"
-          class="block h-full w-full cursor-pointer overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+          class="group block h-full w-full cursor-pointer overflow-hidden shadow-none transition-shadow duration-500 hover:shadow-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
           @click="openImg(photo)"
         >
           <img
             :src="photo.src"
             :alt="photo.alt"
-            class="aspect-square h-full w-full object-cover transition-all duration-500 hover:scale-105 sm:aspect-auto"
+            class="aspect-square h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 sm:aspect-auto"
             loading="lazy"
             @error="onImgError"
           />

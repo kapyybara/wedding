@@ -6,10 +6,10 @@ import ScrollReveal from './ScrollReveal.vue'
 <template>
   <footer class="bg-cream-dark section-padding text-center">
     <ScrollReveal animation="fade-in">
-      <!-- Monogram — groom & bride initials -->
+      <!-- Monogram — groom & bride short names -->
       <div class="mx-auto flex items-center justify-center">
         <span class="font-script text-5xl text-ink">
-          {{ wedding.groom.charAt(0) }} &amp; {{ wedding.bride.charAt(0) }}
+          {{ wedding.groomShort }} và {{ wedding.brideShort }}
         </span>
       </div>
       <h2 class="mt-6 font-script text-5xl text-ink">{{ wedding.thankYou.title }}</h2>
