@@ -18,12 +18,20 @@ function scrollTo(id: string) {
   }
 }
 
+// Position of the active button within the scroller's content, robust to the
+// button's offsetParent (each <li> is positioned, so offsetLeft would be ~0).
+function activeBtnOffset(scroller: HTMLElement, activeBtn: HTMLElement) {
+  const sRect = scroller.getBoundingClientRect()
+  const bRect = activeBtn.getBoundingClientRect()
+  return { left: bRect.left - sRect.left + scroller.scrollLeft, width: bRect.width }
+}
+
 function centerActiveTab() {
   const scroller = scrollerRef.value
   const activeBtn = scroller?.querySelector<HTMLElement>('[data-active="true"]')
   if (!scroller || !activeBtn) return
-  const target =
-    activeBtn.offsetLeft - scroller.clientWidth / 2 + activeBtn.clientWidth / 2
+  const { left, width } = activeBtnOffset(scroller, activeBtn)
+  const target = left - scroller.clientWidth / 2 + width / 2
   scroller.scrollTo({ left: target, behavior: 'smooth' })
 }
 
@@ -31,8 +39,9 @@ function updatePill() {
   const scroller = scrollerRef.value
   const activeBtn = scroller?.querySelector<HTMLElement>('[data-active="true"]')
   if (!scroller || !activeBtn) return
-  pillStyle.transform = `translateX(${activeBtn.offsetLeft}px)`
-  pillStyle.width = `${activeBtn.offsetWidth}px`
+  const { left, width } = activeBtnOffset(scroller, activeBtn)
+  pillStyle.transform = `translateX(${left}px)`
+  pillStyle.width = `${width}px`
   pillStyle.opacity = '1'
 }
 
@@ -41,14 +50,20 @@ watch(activeId, () => nextTick(() => {
   updatePill()
 }))
 
+// Track which sections currently overlap the activation band. Entries in a
+// single observer callback aren't ordered by position, so we can't just take
+// the last intersecting one — instead we record visibility and pick the
+// topmost visible section in nav order.
+const visible = reactive<Record<string, boolean>>({})
+
 onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
-        if (entry.isIntersecting) {
-          activeId.value = entry.target.id
-        }
+        visible[entry.target.id] = entry.isIntersecting
       }
+      const topmost = sections.find((s) => visible[s.id])
+      if (topmost) activeId.value = topmost.id
     },
     { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
   )

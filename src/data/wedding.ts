@@ -4,8 +4,8 @@ export const wedding = {
   bride: 'Phương Vy',
   groom: 'Nhật Tiến',
   // Tên gọi ngắn — dùng ở monogram, footer, page loader thay cho chữ viết tắt.
-  brideShort: 'Vy',
-  groomShort: 'Tiến',
+  brideShort: 'V',
+  groomShort: 'T',
   // Ngày giờ tổ chức (định dạng ISO) — dùng cho đồng hồ đếm ngược.
   weddingDate: '2026-07-24T11:00:00+07:00',
   dateLabel: '24 . 07 . 2026',
@@ -96,13 +96,8 @@ export const wedding = {
   gift: {
     title: 'HỘP MỪNG CƯỚI',
     body: 'Sự hiện diện của bạn đã là món quà quý giá nhất. Nếu muốn gửi lời chúc qua hộp mừng, tụi mình xin trân trọng đón nhận tấm lòng của bạn.',
-    accounts: [
-      {
-        owner: 'Phạm Nhật Tiến',
-        bank: 'MBBank',
-        number: '0502200256789',
-      },
-    ],
+    qrImage: '/images/qr-mung-cuoi.jpg',
+    qrCaption: 'Quét mã để gửi hộp mừng cưới',
   },
 
   thankYou: {
