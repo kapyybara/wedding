@@ -31,13 +31,8 @@ function close() {
 
       <ScrollReveal animation="fade-in">
         <div class="mt-12 flex flex-col items-center">
-          <button
-            type="button"
-            class="gift-trigger"
-            :class="{ 'is-opening': phase !== 'closed' }"
-            aria-label="Mở hộp mừng cưới"
-            @click="openBox"
-          >
+          <button type="button" class="gift-trigger" :class="{ 'is-opening': phase !== 'closed' }"
+            aria-label="Mở hộp mừng cưới" @click="openBox">
             <span class="gift-box" aria-hidden="true">
               <span class="gift-glow"></span>
               <span class="gift-lid">
@@ -60,30 +55,17 @@ function close() {
 
     <!-- Fullscreen QR viewer -->
     <transition name="lightbox-fade">
-      <div
-        v-if="phase === 'open'"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 p-4 backdrop-blur-sm"
-        role="dialog"
-        aria-modal="true"
-        :aria-label="wedding.gift.qrCaption"
-        @click="close"
-      >
-        <button
-          type="button"
-          class="carousel-arrow absolute right-5 top-5"
-          aria-label="Đóng"
-          @click.stop="close"
-        >
-          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <div v-if="phase === 'open'"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 p-4 backdrop-blur-sm" role="dialog"
+        aria-modal="true" :aria-label="wedding.gift.qrCaption" @click="close">
+        <button type="button" class="carousel-arrow absolute right-5 top-5" aria-label="Đóng" @click.stop="close">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
         </button>
-        <img
-          :src="wedding.gift.qrImage"
-          :alt="wedding.gift.qrCaption"
-          class="qr-pop max-h-[90vh] max-w-full rounded-lg shadow-2xl"
-          @click.stop
-        />
+        <img :src="wedding.gift.qrImage" :alt="wedding.gift.qrCaption"
+          class="qr-pop max-h-[90vh] max-w-full rounded-lg shadow-2xl" @click.stop />
       </div>
     </transition>
   </section>
@@ -99,6 +81,7 @@ function close() {
   padding: 1rem;
   outline: none;
 }
+
 .gift-trigger:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 4px;
@@ -114,9 +97,11 @@ function close() {
   animation: gift-idle 3.2s ease-in-out infinite;
   transition: transform 0.3s ease;
 }
+
 .gift-trigger:hover .gift-box {
   transform: translateY(-4px) scale(1.03);
 }
+
 .gift-trigger.is-opening .gift-box {
   animation: gift-shake 0.4s ease-in-out;
 }
@@ -132,6 +117,7 @@ function close() {
   border-radius: 4px;
   box-shadow: 0 14px 30px -12px rgba(35, 40, 27, 0.6);
 }
+
 /* Vertical ribbon down the body */
 .gift-ribbon {
   position: absolute;
@@ -159,6 +145,7 @@ function close() {
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
   z-index: 2;
 }
+
 /* Bow on the lid */
 .gift-bow {
   position: absolute;
@@ -168,6 +155,7 @@ function close() {
   height: 24px;
   transform: translateX(-50%);
 }
+
 .gift-bow::before,
 .gift-bow::after {
   content: '';
@@ -178,11 +166,13 @@ function close() {
   background: var(--color-cream);
   border-radius: 50% 50% 50% 50% / 70% 70% 40% 40%;
 }
+
 .gift-bow::before {
   left: 0;
   transform: rotate(-18deg);
   transform-origin: bottom right;
 }
+
 .gift-bow::after {
   right: 0;
   transform: rotate(18deg);
@@ -207,6 +197,7 @@ function close() {
   opacity: 0;
   pointer-events: none;
 }
+
 .gift-trigger.is-opening .gift-glow {
   animation: gift-burst 0.72s ease-out;
 }
@@ -221,55 +212,138 @@ function close() {
   opacity: 0;
   pointer-events: none;
 }
-.gift-sparkle-1 { top: 20px; left: 20px; }
-.gift-sparkle-2 { top: 8px; left: 96px; }
-.gift-sparkle-3 { top: 40px; left: 108px; }
-.gift-trigger.is-opening .gift-sparkle-1 { animation: gift-spark 0.7s ease-out 0.05s; }
-.gift-trigger.is-opening .gift-sparkle-2 { animation: gift-spark 0.7s ease-out 0.12s; }
-.gift-trigger.is-opening .gift-sparkle-3 { animation: gift-spark 0.7s ease-out 0.18s; }
+
+.gift-sparkle-1 {
+  top: 20px;
+  left: 20px;
+}
+
+.gift-sparkle-2 {
+  top: 8px;
+  left: 96px;
+}
+
+.gift-sparkle-3 {
+  top: 40px;
+  left: 108px;
+}
+
+.gift-trigger.is-opening .gift-sparkle-1 {
+  animation: gift-spark 0.7s ease-out 0.05s;
+}
+
+.gift-trigger.is-opening .gift-sparkle-2 {
+  animation: gift-spark 0.7s ease-out 0.12s;
+}
+
+.gift-trigger.is-opening .gift-sparkle-3 {
+  animation: gift-spark 0.7s ease-out 0.18s;
+}
 
 @keyframes gift-idle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
+
 @keyframes gift-shake {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-4deg); }
-  75% { transform: rotate(4deg); }
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-4deg);
+  }
+
+  75% {
+    transform: rotate(4deg);
+  }
 }
+
 @keyframes gift-burst {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
-  45% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
+
 @keyframes gift-spark {
-  0% { opacity: 0; transform: translateY(0) scale(0.4); }
-  40% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-26px) scale(1.1); }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.4);
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-26px) scale(1.1);
+  }
 }
 
 /* Image pop-in inside the lightbox */
 .qr-pop {
   animation: qr-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 @keyframes qr-pop-in {
-  0% { opacity: 0; transform: scale(0.85); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .lightbox-fade-enter-active,
 .lightbox-fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .lightbox-fade-enter-from,
 .lightbox-fade-leave-to {
   opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gift-box { animation: none; }
-  .gift-lid { transition: opacity 0.3s ease; }
-  .gift-trigger.is-opening .gift-lid { transform: none; }
-  .gift-sparkle, .gift-glow, .qr-pop { animation: none !important; }
+  .gift-box {
+    animation: none;
+  }
+
+  .gift-lid {
+    transition: opacity 0.3s ease;
+  }
+
+  .gift-trigger.is-opening .gift-lid {
+    transform: none;
+  }
+
+  .gift-sparkle,
+  .gift-glow,
+  .qr-pop {
+    animation: none !important;
+  }
 }
 </style>

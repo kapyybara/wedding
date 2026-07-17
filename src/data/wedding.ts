@@ -72,6 +72,40 @@ export const wedding = {
     ],
   },
 
+  // Lịch trình di chuyển — xe đưa đón từ Sài Gòn.
+  itinerary: {
+    title: 'LỊCH TRÌNH DI CHUYỂN',
+    subtitle: 'Xe đưa đón từ Sài Gòn đến Đồng Nai',
+    date: 'Thứ Sáu, 24.07.2026',
+    items: [
+      {
+        time: '05:00',
+        label: 'Khởi hành',
+        note: 'Xe sẽ đón khách tại Bến xe Miền Đông cũ lúc 5:00 sáng. Vui lòng có mặt trước 15 phút ạ.',
+        location: 'Bến xe Miền Đông cũ',
+        address: 'Quận Bình Thạnh, TP. Hồ Chí Minh',
+        mapUrl: 'https://maps.app.goo.gl/qFwzC7BDCF21vWwJA',
+        icon: 'departure',
+      },
+      {
+        time: '10:00',
+        label: 'Đến nơi',
+        location: 'Nhà Hàng Ba Thành',
+        address: 'Thôn 3 - Bom Bo - Đồng Nai',
+        mapUrl: 'https://maps.google.com/?q=Nha+Hang+Ba+Thanh+Bom+Bo+Dong+Nai',
+        icon: 'arrival',
+      },
+      {
+        time: '14:00',
+        label: 'Về Sài Gòn',
+        location: 'Nhà Hàng Ba Thành',
+        address: 'Thôn 3 - Bom Bo - Đồng Nai',
+        mapUrl: 'https://maps.google.com/?q=Nha+Hang+Ba+Thanh+Bom+Bo+Dong+Nai',
+        icon: 'return',
+      },
+    ],
+  },
+
   gallery: {
     title: 'KHOẢNH KHẮC CỦA TỤI MÌNH',
     subtitle: 'Một vài hình ảnh đáng nhớ trên hành trình yêu thương',
@@ -89,7 +123,17 @@ export const wedding = {
     title: 'XÁC NHẬN THAM DỰ',
     intro: 'Hãy cho tụi mình biết bạn có thể đến chung vui nhé',
     deadlineNote:
-      'Vui lòng phản hồi trước ngày 18.07.2026 để tụi mình tiện sắp xếp. Cảm ơn bạn rất nhiều!',
+      'Vui lòng phản hồi trước ngày 20.07.2026 để tụi mình tiện sắp xếp. Cảm ơn bạn rất nhiều!',
+  },
+
+  // Thông tin liên hệ — Zalo / điện thoại.
+  contact: {
+    title: 'LIÊN HỆ',
+    subtitle: 'Nếu cần hỗ trợ, bạn vui lòng liên hệ qua Zalo hoặc gọi điện nhé',
+    phones: [
+      { number: '0707710344', label: 'Nhà Trai' },
+      { number: '0931333574', label: 'Nhà Gái' },
+    ],
   },
 
   // Mừng cưới — chuyển khoản.
@@ -119,11 +163,13 @@ export const wedding = {
     items: [
       { id: 'welcome', label: 'Chào mừng' },
       { id: 'events', label: 'Sự kiện' },
+      { id: 'itinerary', label: 'Lịch trình' },
       { id: 'countdown', label: 'Đếm ngược' },
       { id: 'story', label: 'Chuyện tình' },
       { id: 'gallery', label: 'Ảnh cưới' },
       { id: 'rsvp', label: 'Xác nhận' },
       { id: 'gift', label: 'Mừng cưới' },
+      { id: 'contact', label: 'Liên hệ' },
     ],
   },
 }
